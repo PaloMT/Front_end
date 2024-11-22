@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300vh;
+    background-color: beige;
+}
+
+.box {
+    background-color: navy;
+    padding: 20px;
+    height: 100px;
+    width: 400px;
+    color: white;
+    text-align: center;
+    font-size: 50px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column; /* Cambia la disposición a vertical */
+    }
+}
