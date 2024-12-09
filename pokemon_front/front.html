@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartelera Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .carousel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 80%;
+            height: 60vh;
+        }
+
+        .item {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Colores para simular las imágenes */
+        .item:nth-child(1) {
+            background-color: red;
+        }
+
+        .item:nth-child(2) {
+            background-color: blue;
+        }
+
+        .item:nth-child(3) {
+            background-color: green;
+        }
+
+        .item:nth-child(4) {
+            background-color: yellow;
+        }
+
+        .item:nth-child(5) {
+            background-color: purple;
+        }
+
+        /* Estilos cuando un item está seleccionado */
+        .active {
+            transform: scale(1.5);
+            z-index: 10;
+        }
+
+        .carousel.dimmed .item:not(.active) {
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+
+    <script>
+        const items = document.querySelectorAll('.item');
+        const carousel = document.querySelector('.carousel');
+
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remover la clase 'active' de todos los elementos
+                items.forEach(i => i.classList.remove('active'));
+
+                // Añadir la clase 'active' al elemento seleccionado
+                item.classList.add('active');
+
+                // Aplicar la clase 'dimmed' a la cartelera para oscurecer los demás
+                carousel.classList.add('dimmed');
+            });
+        });
+
+        // Si haces click fuera del centro, vuelve al estado normal
+        document.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('item')) {
+                items.forEach(i => i.classList.remove('active'));
+                carousel.classList.remove('dimmed');
+            }
+        });
+    </script>
+</body>
+</html>

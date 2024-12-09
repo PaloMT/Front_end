@@ -1,0 +1,493 @@
+
+
+
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <meta name="theme-color" content="#C4B31A" />
+
+    <title>Colegio Estudio - Module:session/login</title>
+  
+    <link rel="icon" type="image/png" href="https://cdn.phidias.es/interface/xhtml/favicon.png" />
+  <link rel="shortcut icon" href="https://cdn.phidias.es/interface/xhtml/favicon.png" />
+  
+  
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.phidias.es/interface/xhtml/index-vue.css?20230726-2" />
+  <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.phidias.es/interface/xhtml/index-box.css?20230818" />
+
+          
+  <style>
+    :root {
+      --phidias-box-color: #C4B31A;
+      --phidias-box-image: url(https://cdn.phidias.es/interface/xhtml/./img/login-background.jpg);
+    }
+  </style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  if(window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone){
+    document.getElementById("please-wait").showModal();
+    let baseURI = "https://estudio.phidias.es/";
+    let endpoint = `${ baseURI }rest/1/system/authentication/checkforcookie`;
+    fetch(endpoint).then( response => {
+      if (response.ok) {
+        location.reload();
+      }else{
+        document.getElementById("please-wait").close();
+      }
+    });
+  }
+});
+</script> 
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" />
+<link rel="stylesheet" href="https://cdn.phidias.es/interface/xhtml/lib/style.css?20241207" />
+<link rel="stylesheet" href="https://cdn.phidias.es/interface/xhtml//css/design-system.css?20241007" />
+
+<script type="text/javascript">
+  const PhidiasApp = {
+    url: "https://estudio.api.phidias.es/",
+    language: "es_ES",
+    timezone: "Europe/Madrid",
+    token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBsaWNhdGlvbiI6InYzIiwiaWQiOiJndWVzdCIsInR5cGUiOiJuby1lcXVpdiJ9.yLsyz3B9zpSGKZZQR3T9v-HYgM4dXfLi5YOWgLDJ18A",
+      }
+</script>
+
+<script src="https://cdn.phidias.es/interface/xhtml/lib/phidias-pwa.umd.js?20241207"></script>
+
+<script>
+  const PhidiasI18n = PWA.i18n.provideI18n({
+    language: PhidiasApp.language,
+    fallbackLanguage: 'en',
+    currency: 'cop', //default currency
+    timeZone: "Europe/Madrid",
+    languages: {
+   es: 'Español (LA)',   es_ES: 'Español (ES)',   en: 'English',    ca: 'Català',    gl: 'Gallego',    it: 'Italiano',    fr: 'Français',    de: 'Deutsch',    pt: 'Português',    ja: 'Japanese', }, // Available language list
+  });
+  PhidiasI18n.updateDictionary(PhidiasApp.language, ({}))
+
+  function createPhidiasApp(options) {
+    return PWA.Vue.createApp({
+      ...options,
+      setup(props, context) {
+
+        PWA.api.provideClient('core', {
+          baseURL: 'https://estudio.phidias.es/',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+
+        PWA.api.provideClient('phi', {
+          baseURL: 'https://phi.co'
+        })
+
+                  PWA.api.provideClient('v4', {
+            baseURL: "https://estudio.api.phidias.es/",
+            token: PhidiasApp.token
+          })
+        
+        if (options.setup) {
+          return options.setup(props, context)
+        }
+      }
+    })
+  }
+
+
+  document.addEventListener("DOMContentLoaded", function (event) {
+    const containers = document.getElementsByClassName('pwa-container')
+    containers.forEach((containerElement) => {
+      createPhidiasApp({
+        components: {
+          UiIcon: PWA.ui.UiIcon,
+          UiItem: PWA.ui.UiItem,
+          UiInput: PWA.ui.UiInput,
+          UiButton: PWA.ui.UiButton,
+          UiCard: PWA.ui.UiCard,
+          UiDialog: PWA.ui.UiDialog,
+          UiTabs: PWA.ui.UiTabs,
+          UiTab: PWA.ui.UiTab,
+        }
+      }).mount(containerElement)
+    })
+  })
+</script>
+	<style type="text/css" >
+		
+body {
+  --ui-color-primary: #C4B31A;
+  --ui-color-z1: #ededed;
+}
+
+/* !!! fix weird position bug.  #branches has an inline width set dynamically which is f'd when page takes long to load */
+#branches {
+  min-width: 70vw;
+}
+
+.UiDataTable {
+  max-height: 70vh;
+}
+
+fieldset .CmsBlock.UiInput {
+  margin: 0 0.25rem;
+  /* margin-bottom: 1.6rem; */
+  margin: 1rem 0.25rem;
+}
+
+fieldset .CmsBlock.UiInput--type-text {
+  flex: 1;
+}
+
+#pwa *,
+.UiWindow * {
+  box-sizing: border-box;
+}
+
+#pwa fieldset,
+div[data-tippy-root] fieldset,
+.UiDialog__contents fieldset,
+.UiWindow fieldset {
+  background: rgba(0,0,0, 0.02);
+  max-width: 650px;
+  padding: 50px 12px 12px 12px;
+}
+
+#pwa fieldset legend,
+div[data-tippy-root] fieldset legend,
+.UiDialog__contents fieldset legend,
+.UiWindow fieldset legend {
+  font-size: 1em;
+  padding: 0 16px;
+}
+
+.UiInputUrl__input {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+		</style>
+	<style type="text/css" >
+		
+.phidias_privacy {
+  padding: 12px;
+}
+
+		</style>
+	<style type="text/css" >
+		
+/* OCULTAR EL MENU DE PRIVACIDAD DEL DROPDOWN (!) */
+.phidias_toolbar_dropdown .UiDialog {
+  display: none;
+}
+
+#phidias_box_footer {
+  margin: 36px 0;
+  text-align: center;
+}
+
+#phidias_box_footer .UiDialog {
+  display: inline-block;
+  margin: auto;
+}
+
+#phidias_box_footer .UiItem {
+  --ui-item-padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#phidias_box_footer .UiItem:hover {
+  background-color: var(--ui-color-hover);
+}
+
+		</style>
+</head>
+
+<body>
+  <div id="phidias_box">
+    <div id="phidias_box_left" class="scroll">
+      <div id="phidias_box_top">
+        <ui-input
+          class="phidias_language_picker"
+          type="select-native"
+          :model-value="currentLanguage"
+          @update:model-value="setLanguage"
+          :options="availableLanguages"
+        ></ui-input>
+      </div>
+      <script>
+      createPhidiasApp({
+        components: {
+          UiInput: PWA.ui.UiInput
+        },
+        setup() {
+          const i18n = PWA.i18n.useI18n()
+          const configuredLanguages = ({
+   es: 'Español (LA)',   es_ES: 'Español (ES)',   en: 'English',    ca: 'Català',    gl: 'Gallego',    it: 'Italiano',    fr: 'Français',    de: 'Deutsch',    pt: 'Português',    ja: 'Japanese', })
+          const availableLanguages = Object.keys(configuredLanguages).map(k => ({ value: k, text: configuredLanguages[k] }))
+          return {
+            availableLanguages,
+            currentLanguage: i18n.language,
+            setLanguage: function(lang) {
+              window.location = 'https://estudio.phidias.es/language/change?to='+lang
+            }
+          }
+        }
+      }).mount('#phidias_box_top')
+      </script>
+
+      <div align="center">
+        <img id="phidias_box_logo" src ="https://estudio.phidias.es/interface/xhtml/./img/label.png" />
+      </div>
+
+      <div id="phidias_box_contents">
+        
+
+<style>
+  .remindme {
+    display: flex;
+    align-items: center;
+  }
+
+  .phidias_warning {
+    width: 100% !important;
+  }
+  
+  #please-wait{
+    padding: 20px;
+    border: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  #please-wait[open]{
+    display: grid;
+    align-items: center;
+  }
+</style>
+
+
+
+<dialog id="please-wait">
+  <p>Espere por favor...</p>
+</dialog>
+
+<div>
+    
+  
+
+
+
+
+
+
+
+
+<div id="phidias_warning_2997fb26f1457e090461873872f1822b" class=" phidias_warning_align--center">
+  <div class="phidias_warning phidias_warning--warn" v-if="validationCookie">
+
+    <div class="phidias_warning__left " @click="goTo('')">
+      <ui-icon class="icon-left" src= "mdi:alert-outline"></ui-icon>
+      <span v-html="content"></span>
+    </div>
+
+        <ui-icon class="icon-close" src= "mdi:close" @click="actionClose('warning_d41d8cd98f00b204e9800998ecf8427e')"></ui-icon>  </div>
+</div>
+
+<script>
+  createPhidiasApp({
+    components: {
+      UiIcon: PWA.ui.UiIcon
+    },
+    setup() {
+      const content = "";
+      const showWarning = PWA.Vue.ref(true);
+
+      const actionClose = (elemHash) => {
+        showWarning.value = false;
+        localStorage.setItem(elemHash, true);
+      };
+
+      const validationCookie = PWA.Vue.computed(() => {
+        return (content && content != "") && !localStorage.getItem('warning_d41d8cd98f00b204e9800998ecf8427e') && showWarning.value;
+      });
+
+      const goTo = (href) => {
+        if (href && href != "") {
+          window.location.href = href;
+        }
+      }
+
+      const goToButton = (href) => {
+        goTo(href);
+      }
+
+      return {
+        content,
+        actionClose,
+        validationCookie,
+        goTo,
+        goToButton
+      }
+    }
+  }).mount('#phidias_warning_2997fb26f1457e090461873872f1822b')
+</script>
+
+<style>
+  .phidias_warning {
+    margin: var(--align);
+    max-width: 600px;
+    display: flex;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    background: var(--phidias-warning-bg);
+    border: var(--phidias-warning-border);
+    color: var(--phidias-warning-color);
+    border-width: 0px;
+    align-items: center;
+  }
+
+  .phidias_warning__left {
+    gap: 10px;
+    flex-grow: 1;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    text-align: left;
+  }
+
+  .phidias_warning--link {
+    cursor: pointer;
+  }
+
+  .icon-left {
+    font-size: 35px;
+  }
+
+  .icon-close {
+    margin: 8px;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+
+  .phidias_warning--success {
+    --phidias-warning-bg: #e4f8f0;
+    --phidias-warning-border: solid #1ea97c;
+    --phidias-warning-color: #1ea97c;
+  }
+  .phidias_warning--info {
+    --phidias-warning-bg: #e9e9ff;
+    --phidias-warning-border: solid #696cff;
+    --phidias-warning-color: #696cff;
+  }
+  .phidias_warning--warn {
+    --phidias-warning-bg: #fff2e2;
+    --phidias-warning-border: solid #cc8925;
+    --phidias-warning-color: #cc8925;
+  }
+  .phidias_warning--error {
+    --phidias-warning-bg: #ffe7e6;
+    --phidias-warning-color: #ff5757;
+    border: none !important;
+  }
+
+  .phidias_warning button{
+    background: transparent;
+    color: var(--phidias-warning-color);
+    border: 1px solid var(--phidias-warning-color);
+  }
+
+  .phidias_warning_align--center {
+    --align: auto;
+  }
+  .phidias_warning_align--left {
+    --align: 0;
+  }
+</style>
+
+
+  
+  
+
+  <form method="post" action="" autocomplete="off">
+          <div class="field">
+        <label>Usuario</label>
+        <input type="text" name="_width" id="autofocus" autofocus autocorrect="off" autocapitalize="off"
+          spellcheck="false" />
+      </div>
+
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" name="_height" />
+      </div>
+
+      <div class="recovery-pw">
+        <div class="recovery-pw-left">
+          <div class="remindme">
+            <input id="remindme-box" type="checkbox" name="remember" value="1" />
+            <label for="remindme-box" style="margin-left: 5px;">Recordarme</label>
+          </div>
+        </div>
+                <div class="recovery-pw-right">
+          <small><a href="https://estudio.phidias.es/person/password/remind" title="Restablece tu contraseña o crea una nueva">Restablecer o crear contraseña</a></small>
+        </div>
+              </div>
+
+      <input type="submit" value="Entrar" class="primaryButton" />
+        
+        <a href="https://estudio.phidias.es/person/password/magiclink">
+      <input type="button" value="Ingresar sin contraseña" class="secondaryButton" />
+    </a>
+      </form>
+
+    <div style="display: flex; margin-top: 20px;align-items: center;">
+    <div style="width: 45%; vertical-align: center;">
+      <hr>
+    </div>
+    <div style="width: 10%;"><small>O</small></div>
+    <div style="width: 45%;">
+      <hr>
+    </div>
+  </div>
+  
+      <div class="btnLoginExternal openid_login">
+      <a href="?_openid" class="google loginExternal">
+        <img src="https://cdn.phidias.es/interface/xhtml/session/../img/google.png" width="5%">
+        Ingresar con google
+      </a>
+    </div>
+  
+  </div>
+
+      </div>
+
+      <div id="phidias_box_footer">
+  
+
+</div>
+
+<script>
+createPhidiasApp({
+  components: {
+    UiDialog: PWA.ui.UiDialog,
+    UiItem: PWA.ui.UiItem,
+  }
+}).mount('#phidias_box_footer')
+</script>
+
+
+
+    </div>
+    <div id="phidias_box_image"></div>
+  </div>
+</body>
+
+</html>

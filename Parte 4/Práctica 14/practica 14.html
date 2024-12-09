@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="estilos 14.css">
+<title>Mi Primera Página con Estilos</title>
+</head>
+<body>
+    <input type="text" id="entrada" placeholder="Escribe algo">
+    <p id="texto"></p>
+
+    <script>
+        const entrada = document.getElementById("entrada");
+        const texto = document.getElementById("texto");
+
+        entrada.addEventListener("keydown", (event) => {
+            texto.innerText = `Has presionado la tecla: ${event.key}`;
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevenir el comportamiento predeterminado
+                texto.innerText = `Enviado!!`;
+            }
+        });
+    </script>
+</body>
+</html>

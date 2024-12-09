@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="estilos 17.css">
+<title>Mi Primera Página con Estilos</title>
+</head>
+<body>
+    <div id="foro">
+        <p>Bienvenidos al Foro</p>
+        <button id="nuevoMensaje">Agregar Mensaje</button>
+        <input type="text" id="entrada" placeholder="Escribe algo">
+        <div id="mensajes">No hay mensajes</div>
+    </div>
+
+    <script>
+        const entrada = document.getElementById("entrada");
+        const mensajes = document.getElementById("mensajes");
+
+        const obtenerFechaActual = () => {
+            const ahora = new Date();
+            const dia = String(ahora.getDate()).padStart(2, '0');
+            const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+            const anio = String(ahora.getFullYear()).slice(2);
+            const horas = String(ahora.getHours()).padStart(2, '0');
+            const minutos = String(ahora.getMinutes()).padStart(2, '0');
+            return `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+        };
+
+        const actualizarEstadoMensajes = () => {
+            if (mensajes.children.length === 0) {
+                mensajes.innerText = "No hay mensajes";
+            }
+        };
+
+        document.getElementById("nuevoMensaje").addEventListener("click", () => {
+            const mensajeTexto = entrada.value.trim();
+            if (mensajeTexto === "") {
+                alert("Por favor, escribe un mensaje antes de agregarlo.");
+                return;
+            }
+
+            const mensaje = document.createElement("div");
+            mensaje.classList.add("mensaje");
+            mensaje.innerText = obtenerFechaActual() + " Nuevo mensaje añadido: " + mensajeTexto + " ";
+
+            const eliminarBtn = document.createElement("button");
+            eliminarBtn.innerText = "🗑️";
+            mensaje.appendChild(eliminarBtn);
+
+            setTimeout(() => {
+                if (mensajes.innerText === "No hay mensajes") {
+                    mensajes.innerHTML = ""; // Limpia el texto predeterminado
+                }
+                mensajes.appendChild(mensaje);
+            }, 5000);
+
+            entrada.value = ""; // Limpiar el input después de pulsar el botón
+        });
+
+        mensajes.addEventListener("click", (event) => {
+            if (event.target.tagName === "BUTTON") {
+                event.target.parentNode.remove();
+                if (mensajes.children.length === 0) {
+                    actualizarEstadoMensajes();
+                }
+            }
+        });
+
+        // Inicialización: Mostrar "No hay mensajes" al cargar la página
+        actualizarEstadoMensajes();
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>botón</title>
+    <link rel="stylesheet" href="estilos 13.css">
+</head>
+<body>
+			
+	<button id="btn">Haz clic en mí</button>
+	<p id="mensaje"></p>
+
+	<script>
+		const boton = document.getElementById("btn");
+		const mensaje = document.getElementById("mensaje");
+
+		boton.addEventListener("click", () => {
+			mensaje.innerText = "¡Hiciste clic en el botón!";
+			boton.style.backgroundColor = 'orange';
+		});
+
+		boton.addEventListener("mouseover", () => {
+			mensaje.innerText = "Estás sobre el botón";
+		});
+
+		boton.addEventListener("mouseout", () => {
+			mensaje.innerText = "El cursor ha salido del botón";
+		});
+		boton.addEventListener("dblclick", () => {
+			mensaje.innerText = "¡Hiciste 2 clics en el botón!";
+			boton.style.backgroundColor = 'crimson';
+		});
+	</script>
+
+</body>
+</html>

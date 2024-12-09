@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="estilos 16.css">
+<title>Mi Primera Página con Estilos</title>
+</head>
+<body>
+    <button id="crear-boton">Crear Botón</button>
+    <div id="contenedor"></div>
+    <p id="mensaje"></p>
+
+    <script>
+        const contenedor = document.getElementById("contenedor");
+        const mensaje = document.getElementById("mensaje");
+
+        document.getElementById("crear-boton").addEventListener("click", () => {
+            const nuevoBoton = document.createElement("button"); 
+            nuevoBoton.className = "dinamico"; 
+            nuevoBoton.innerText = `Botón ${contenedor.children.length + 1}`; 
+            contenedor.appendChild(nuevoBoton);
+        });
+
+        contenedor.addEventListener("click", (event) => {
+            if (event.target.classList.contains("dinamico")) {
+                mensaje.innerText = `Has hecho clic en: ${event.target.innerText}`;
+            }
+        });
+    </script>
+</body>
+</html>
