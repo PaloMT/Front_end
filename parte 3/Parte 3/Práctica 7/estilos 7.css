@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color:rebeccapurple; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr); 
+    gap: 10px;
+    width: 1000PX; 
+    max-width: 600px; 
+    height: 300px ;
+    background-color: whitesmoke; 
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Elementos de la cuadrícula */
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:sandybrown;
+    color: black;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: center;
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="estilos 5.css">
+<title>Mi Primera Página con Estilos</title>
+</head>
+<body>
+    <h1>Bienvenidos al Foro</h1>
+    <p id="saludo"></p>
+    <script>
+    let nombre = prompt("¿Cuál es tu nombre?");
+    let fechaActual = new Date().toLocaleDateString("es-ES", { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    document.getElementById("saludo").innerText = 
+    "¡Hola, " + nombre + "! Bienvenido al foro. Hoy es " + fechaActual + ".";
+
+    </script>
+</body>
+</html>
+

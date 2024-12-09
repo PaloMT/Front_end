@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Contenido Centrado</title>
+    <link rel="stylesheet" href="estilos 10.css">
+</head>
+<body>
+    <button id="botonSaludo">Haz clic para saludar</button>
+<p id="mensaje"></p>
+<script>
+    document.getElementById("botonSaludo").addEventListener("click", function() {
+        document.getElementById("mensaje").innerText = "¡Gracias por hacer clic!";
+    });
+    const boton = document.getElementById('botonSaludo');
+
+    boton.addEventListener('click', () => {
+    boton.style.backgroundColor = 'powderblue';
+    boton.style.color = 'black';
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+body{background-color:#95BDFF;
+}
+legend{
+    background-color:rgb(214, 147, 181);
+    color: #FFFFFF;
+    padding: 3px 6px;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+label {
+  font-size: 0.9em; 
+  color:#205E61;
+}
+
+
+input.a {
+    background-color:#677251;
+    margin: 0.4rem;
+    color: white;
+    border-color:#353b2c;
+}
+input.b {
+    background-color:#E96479;
+    margin: 0.4rem;
+    color: white;
+    border-color:#F55050;
+}
+
+.botones {
+  font-size: 1.2em;
+  color: navy;
+}
