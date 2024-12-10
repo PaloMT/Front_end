@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartelera Interactiva</title>
+    <title>Baraja de Pokémon</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,8 @@
 
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
             height: 100vh;
             background-color: #f0f0f0;
@@ -22,83 +23,172 @@
         .carousel {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-end;
             position: relative;
-            width: 80%;
-            height: 60vh;
+            width: 100%;
+            height: 20%;
         }
 
-        .item {
-            width: 150px;
-            height: 150px;
-            margin: 10px;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 130px;
+            height: 180px;
+            margin: 0 -10px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            font-family: Arial, sans-serif;
+            transform-origin: bottom center;
         }
 
-        /* Colores para simular las imágenes */
-        .item:nth-child(1) {
-            background-color: red;
+        /* Posiciones arqueadas */
+        .carousel .card:nth-child(1) {
+            transform: rotate(-20deg);
         }
 
-        .item:nth-child(2) {
-            background-color: blue;
+        .carousel .card:nth-child(2) {
+            transform: rotate(-10deg);
         }
 
-        .item:nth-child(3) {
-            background-color: green;
+        .carousel .card:nth-child(3) {
+            transform: rotate(0deg);
         }
 
-        .item:nth-child(4) {
-            background-color: yellow;
+        .carousel .card:nth-child(4) {
+            transform: rotate(10deg);
         }
 
-        .item:nth-child(5) {
-            background-color: purple;
+        .carousel .card:nth-child(5) {
+            transform: rotate(20deg);
         }
 
-        /* Estilos cuando un item está seleccionado */
+        /* Colores de la baraja superior */
+        .top-carousel .card {
+            background-color: #cccccc;
+        }
+
+        /* Colores de la baraja inferior */
+        .bottom-carousel .card.fire {
+            background-color: #ffcccb;
+        }
+
+        .bottom-carousel .card.water {
+            background-color: #aee7ff;
+        }
+
+        .bottom-carousel .card.grass {
+            background-color: #d4f6c0;
+        }
+
+        .bottom-carousel .card.electric {
+            background-color: #fff7ba;
+        }
+
+        .bottom-carousel .card.psychic {
+            background-color: #e1c4f6;
+        }
+
+        /* Efecto al pasar el cursor */
+        .card:hover {
+            transform: scale(1.2) !important;
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Efecto de selección */
         .active {
-            transform: scale(1.5);
+            transform: scale(1.5) rotate(0deg);
             z-index: 10;
         }
 
-        .carousel.dimmed .item:not(.active) {
-            opacity: 0.3;
+        .hidden {
+            display: none;
+        }
+
+        .card .title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card .details {
+            font-size: 0.9rem;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="carousel">
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
+    <!-- Baraja superior -->
+    <div class="carousel top-carousel">
+        <div class="card">
+            <div class="title">Carta Gris 1</div>
+        </div>
+        <div class="card">
+            <div class="title">Carta Gris 2</div>
+        </div>
+        <div class="card">
+            <div class="title">Carta Gris 3</div>
+        </div>
+        <div class="card">
+            <div class="title">Carta Gris 4</div>
+        </div>
+        <div class="card">
+            <div class="title">Carta Gris 5</div>
+        </div>
+    </div>
+
+    <!-- Baraja inferior -->
+    <div class="carousel bottom-carousel">
+        <div class="card fire">
+            <div class="title">Charmander</div>
+            <div class="details">Tipo: Fuego<br>HP: 50<br>Ataque: 10</div>
+        </div>
+        <div class="card water">
+            <div class="title">Squirtle</div>
+            <div class="details">Tipo: Agua<br>HP: 60<br>Ataque: 8</div>
+        </div>
+        <div class="card grass">
+            <div class="title">Bulbasaur</div>
+            <div class="details">Tipo: Planta<br>HP: 70<br>Ataque: 9</div>
+        </div>
+        <div class="card electric">
+            <div class="title">Pikachu</div>
+            <div class="details">Tipo: Eléctrico<br>HP: 40<br>Ataque: 12</div>
+        </div>
+        <div class="card psychic">
+            <div class="title">Abra</div>
+            <div class="details">Tipo: Psíquico<br>HP: 30<br>Ataque: 15</div>
+        </div>
     </div>
 
     <script>
-        const items = document.querySelectorAll('.item');
-        const carousel = document.querySelector('.carousel');
+        const cards = document.querySelectorAll('.card');
+        const carousels = document.querySelectorAll('.carousel');
 
-        items.forEach(item => {
-            item.addEventListener('click', () => {
-                // Remover la clase 'active' de todos los elementos
-                items.forEach(i => i.classList.remove('active'));
-
-                // Añadir la clase 'active' al elemento seleccionado
-                item.classList.add('active');
-
-                // Aplicar la clase 'dimmed' a la cartelera para oscurecer los demás
-                carousel.classList.add('dimmed');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Ocultar todas las cartas excepto la seleccionada
+                cards.forEach(c => {
+                    if (c !== card) {
+                        c.classList.add('hidden');
+                    } else {
+                        c.classList.add('active');
+                    }
+                });
             });
         });
 
-        // Si haces click fuera del centro, vuelve al estado normal
+        // Restaurar cartas al hacer clic fuera de ellas
         document.addEventListener('click', (e) => {
-            if (!e.target.classList.contains('item')) {
-                items.forEach(i => i.classList.remove('active'));
-                carousel.classList.remove('dimmed');
+            if (!e.target.closest('.card')) {
+                cards.forEach(c => {
+                    c.classList.remove('active', 'hidden');
+                });
             }
         });
     </script>
