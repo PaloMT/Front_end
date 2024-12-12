@@ -10,13 +10,31 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 100vh;
-    background-image: url('estadio\ 1.webp');
-    background-size: cover; /* Ajusta el tamaño */
-    background-repeat: no-repeat; /* Evita repeticiones */
-    background-position: center; /* Centra la imagen */
-    
+    margin: 0;
+    position: relative; /* Necesario para el pseudo-elemento */
+    overflow: hidden; /* Evita que el pseudo-elemento sobresalga */
+    background-color: #333;/* Color de relleno base */
 }
 
+body::before {
+    content: '';
+    position: absolute;
+    top:10%;
+    left: auto;
+    width: 100%; /* Asegura un tamaño mayor que la pantalla */
+    height: 100%;
+    background-image: url('estadio 1.webp');
+    background-size:cover; /* La imagen se ajusta al contenedor sin recortar */
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: rotate(90deg); /* Rota la imagen */
+    transform-origin: center;
+    z-index: -1; /* Coloca la imagen detrás del contenido */
+}
+
+img{
+    size:0.1%;
+}
 .carousel {
     display: flex;
     justify-content: center;
@@ -43,7 +61,16 @@ body {
     font-family: Arial, sans-serif;
     transform-origin: bottom center;
 }
+.image-container {
+    width: 100%; /* Adapta al ancho de la carta */
+    height: 100%; /* Ajusta el alto relativo */
+}
 
+.image-container img {
+    width: 100%; /* Adapta la imagen al ancho del contenedor */
+    height: auto; /* Mantiene la proporción */
+    object-fit: cover; /* Ajusta la imagen para que llene el espacio disponible */
+}
 /* Posiciones arqueadas */
 .carousel .card:nth-child(1) {
     transform: rotate(-10deg);
@@ -65,9 +92,39 @@ body {
     transform: rotate(10deg);
 }
 
+.top-carousel {
+    margin-top: 10px; /* Baja todo el carrusel 50px desde el borde superior */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinea las cartas al inicio */
+    gap: 1px; /* Espaciado entre cartas */
+    width: 100%; /* Ajusta al ancho disponible */
+    padding: 10px; /* Relleno interno opcional */
+}
 /* Colores de la baraja superior */
 .top-carousel .card {
+
     background-color: #cccccc;
+}
+/* Posiciones arqueadas para el carrusel superior */
+.top-carousel .card:nth-child(1) {
+    transform: rotate(10deg); /* Gira en sentido opuesto */
+}
+
+.top-carousel .card:nth-child(2) {
+    transform: rotate(5deg);
+}
+
+.top-carousel .card:nth-child(3) {
+    transform: rotate(0deg); /* Carta central */
+}
+
+.top-carousel .card:nth-child(4) {
+    transform: rotate(-5deg);
+}
+
+.top-carousel .card:nth-child(5) {
+    transform: rotate(-10deg);
 }
 
 /* Colores de la baraja inferior */
@@ -101,7 +158,7 @@ body {
     box-shadow: none !important;
 }}
 /* Efecto de selección */
-.active {
+.bottom-carousel.active {
     transform: scale(1.5) rotate(0deg);
     z-index: 10;
 }
