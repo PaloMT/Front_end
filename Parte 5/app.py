@@ -1,66 +1,55 @@
-import streamlit as st
+from flask import Flask, request, jsonify
 import mysql.connector
-import pandas as pd
 
-# Configuración de conexión a MySQL
-def conectar_db():
+app = Flask(__name__)
+
+# Configuración de conexión a la base de datos
+def get_db_connection():
     return mysql.connector.connect(
-        host="192.168.1.252",  
-        user="PMartinez",            
-        password="", 
-        database="Pokemon Battle")
-
-
-def obtener_ataques():
-    conexion = conectar_db()
-    cursor = conexion.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM ataques_pokemon;")
-    resultados = cursor.fetchall()
-    conexion.close()
-    return pd.DataFrame(resultados)
-
-# Función para agregar un nuevo ataque
-def agregar_ataque(nombre, tipo, potencia, precision):
-    conexion = conectar_db()
-    cursor = conexion.cursor()
-    cursor.execute(
-        "INSERT INTO ataques_pokemon (nombre, tipo, potencia, precision) VALUES (%s, %s, %s, %s)", 
-        (nombre, tipo, potencia, precision)
+        host="192.168.1.17",
+        user="GP_G3",  # Sustituid con vuestro usuario
+        password="segura_GP_G3",  # Sustituid con vuestra contraseña
+        database="Estudio_CCII_GP_G3"  # Sustituid con vuestra base de datos
     )
-    conexion.commit()
-    conexion.close()
 
-# Interfaz en Streamlit
-st.title("Gestión de Ataques Pokémon")
+# Ruta principal para prueba
+@app.route('/test', methods=['GET'])
+def test_connection():
+   try:
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT DATABASE();")
+    database_name = cursor.fetchone()
+    return jsonify({"success": True, "database": database_name[0]})
+   except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
- #Botón para mostrar la tabla completa
-if st.button("Ver tabla completa"):
-    ataques = obtener_ataques()
-    if not ataques.empty:
-        st.write("Tabla de ataques Pokémon:")
-        st.dataframe(ataques)
-    else:
-        st.warning("La tabla de ataques está vacía.")
 
-# Mostrar tabla de ataques_pokemon
-if st.button("Mostrar Ataques Pokémon"):
-    ataques = obtener_ataques()
-    if not ataques.empty:
-        st.write("Ataques en la base de datos:")
-        st.dataframe(ataques)
-    else:
-        st.write("No hay ataques en la base de datos.")
+# Ruta para agregar un alumno
+@app.route('/add', methods=['POST'])
+def add_student():
+    try:
+      data = request.json
+      conn = get_db_connection()
+      cursor = conn.cursor()
+      query = "INSERT INTO alumno (id, nombre_alumno, clase) VALUES (%s, %s, %s)"
+      cursor.execute(query, (data['id'], data['nombre_alumno'], data['clase']))
+      conn.commit()
+      return jsonify({"success": True, "message": "Alumno agregado correctamente"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
-# Agregar un nuevo ataque
-st.subheader("Agregar un nuevo ataque Pokémon")
-nombre = st.text_input("Nombre del ataque")
-tipo = st.selectbox("Tipo del ataque", ["Fuego", "Agua", "Planta", "Eléctrico", "Roca", "Acero", "Normal"])  # Agrega los tipos que desees
-potencia = st.number_input("Potencia", min_value=0, step=1)
-precision = st.number_input("Precisión", min_value=0, max_value=100, step=1)
+# Ruta para listar alumnos
+@app.route('/students', methods=['GET'])
+def get_students():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM alumno")
+        students = cursor.fetchall()
+        return jsonify(students)
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
-if st.button("Agregar Ataque"):
-    if nombre and tipo:
-        agregar_ataque(nombre, tipo, potencia, precision)
-        st.success("¡Ataque agregado exitosamente!")
-    else:
-        st.error("Todos los campos son obligatorios.")
+if __name__ == '__main__':
+    app.run(port=5001, debug=True)

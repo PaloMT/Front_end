@@ -93,14 +93,13 @@ img{
 }
 
 .top-carousel {
-    margin-top: 10px; /* Baja todo el carrusel 50px desde el borde superior */
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Alinea las cartas al inicio */
-    gap: 1px; /* Espaciado entre cartas */
-    width: 100%; /* Ajusta al ancho disponible */
-    padding: 10px; /* Relleno interno opcional */
+    align-items: flex-end; /* Mantén las cartas alineadas al fondo si es necesario */
+    margin-top: 70px; /* Baja las cartas como antes */
+    padding: 0;
 }
+
 /* Colores de la baraja superior */
 .top-carousel .card {
 
